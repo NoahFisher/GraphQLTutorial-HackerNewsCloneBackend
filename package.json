@@ -2,8 +2,13 @@
   "name": "hackernews-node",
   "version": "1.0.0",
   "main": "index.js",
+  "private": true,
   "license": "MIT",
   "dependencies": {
+    "eslint": "^5.12.1",
     "graphql-yoga": "^1.17.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }

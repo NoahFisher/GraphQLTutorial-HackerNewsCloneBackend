@@ -1,4 +1,3 @@
-'use strict';
 const { GraphQLServer } = require('graphql-yoga')
 
 let links = [{
@@ -6,11 +5,13 @@ let links = [{
   url: 'www.howtographql.com',
   description: 'Fullstack tutorial for GraphQL'
 }]
+
 let idCount = links.length
 const resolvers = {
   Query: {
     info: () => `This is the API of a Hackernews Clone`,
-    feed: () => links
+    feed: () => links,
+    link: (parent, args) => links.find((item) => item.id === args.id)
   },
   Mutation: {
     post: (parent, args) => {
@@ -21,6 +22,18 @@ const resolvers = {
       }
       links.push(link)
       return link
+    },
+    updateLink: (parent, args) => {
+      let link = links.find((item) => item.id === args.id)
+      let { description, url } = args
+      link.description = description
+      link.url = url
+
+      return link
+    }
+    deleteLink: (parent, args) => {
+      //TODO
+      return link
     }
   }
 }
@@ -30,3 +43,4 @@ const server = new GraphQLServer({
   resolvers
 })
 server.start(() => console.log(`Server is running on http://localhost:4000`))
+
